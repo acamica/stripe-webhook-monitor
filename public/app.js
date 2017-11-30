@@ -20,9 +20,9 @@ const store = {
     numEvents: [],
     lastEventCount: {},
     // Maximum number of samples we'll measure
-    maxEventCount: 40,
+    maxEventCount: 400,
     // Sampling interval (in ms)
-    interval: 1500,
+    interval: 2000,
     ready: false
   },
   colors: [

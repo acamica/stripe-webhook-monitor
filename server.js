@@ -1,14 +1,12 @@
 "use strict";
 
 const config = require("./config.js");
-const boxen = require("boxen");
 const stripe = require("stripe")(config.stripe.secretKey);
 const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
 const bodyParser = require("body-parser");
 const path = require("path");
-const chalk = require("chalk");
 
 /*
   We use two different Express servers for security reasons: our webhooks
@@ -63,35 +61,3 @@ webhooks.post("/", async (req, res) => {
   // Stripe needs to receive a 200 status from any webhooks endpoint
   res.sendStatus(200);
 });
-
-// Use ngrok to provide a public URL for receiving webhooks
-if (config.ngrok.enabled) {
-  const ngrok = require("ngrok");
-  const boxen = require("boxen");
-
-  ngrok.connect(
-    {
-      addr: webhooksPort,
-      subdomain: config.ngrok.subdomain,
-      authtoken: config.ngrok.authtoken
-    },
-    function(err, url) {
-      if (err) {
-        console.log(err);
-        if (err.code === "ECONNREFUSED") {
-          console.log(
-            chalk.red(`Connection refused at ${err.address}:${err.port}`)
-          );
-          process.exit(1);
-        }
-        console.log(chalk.yellow(`ngrok reported an error: ${err.msg}`));
-        console.log(
-          boxen(err.details.err.trim(), {
-            padding: { top: 0, right: 2, bottom: 0, left: 2 }
-          })
-        );
-      }
-      console.log(` └ Public URL for receiving Stripe webhooks: ${url}`);
-    }
-  );
-}
