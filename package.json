@@ -5,7 +5,12 @@
   "author": "Michael Glukhovsky <mg@stripe.com>",
   "license": "MIT",
   "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acamica/stripe-webhook-monitor"
+  },
   "scripts": {
+    "semantic-release": "semantic-release pre && semantic-release post",
     "pretty": "prettier --write server.js public/app.js"
   },
   "lint-staged": {
@@ -14,7 +19,14 @@
       "git add"
     ]
   },
+  "release": {
+    "branch": "master",
+    "getLastRelease": "last-release-git",
+    "verifyConditions": "./semver-scripts/verify-conditions.js"
+  },
   "devDependencies": {
+    "semantic-release": "7.0.2",
+    "last-release-git": "0.0.3",
     "husky": "^0.14.3",
     "lint-staged": "^4.2.3",
     "prettier": "^1.7.4"
