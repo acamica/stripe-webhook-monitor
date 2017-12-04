@@ -41,7 +41,7 @@ pipeline {
             steps {
                 //TODO: replace with folder credentials
                 sh "echo //registry.npmjs.org/:_authToken=${env.ACAMICA_TOKEN} > .npmrc"
-                sh '/docker-build.sh ${JOB_NAME} jenkins-${BUILD_NUMBER}'
+                sh './docker-build.sh ${JOB_NAME} jenkins-${BUILD_NUMBER}'
                 sh 'docker login -u ${REGISTRY_USR} -p ${REGISTRY_PSW} registry.acamica.com' //TODO: replace with folder credentials
                 sh './docker-push.sh ${JOB_NAME} jenkins-${BUILD_NUMBER}'
                 sh 'rm .npmrc'
